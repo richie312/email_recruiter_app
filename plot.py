@@ -9,7 +9,7 @@ from helper_functions import collect_location_wise_count,tenure_dict
 from datetime import datetime
 from dotenv import load_dotenv
 import os
-import pandas as pd
+#import pandas as pd
 #from dash.exceptions import PreventUpdate
 
 load_dotenv('.env')
@@ -17,7 +17,7 @@ load_dotenv('.env')
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 url = os.getenv('url')
 
-data = collect_location_wise_count(url,7)
+data = collect_location_wise_count(url,180)
 months = list(set(data['month'].values.tolist()))    
 
 server = flask.Flask(__name__)
@@ -35,7 +35,7 @@ def app_layout():
                         {'label': 'Last 2 Days', 'value': 2},
                         
                     ],
-                    value= 7
+                    value= 180
                 ),
                 html.Div(id='dd-output-container'),
                 
@@ -89,4 +89,4 @@ def update_graph(selected):
 # =============================================================================
         
 if __name__ == '__main__':
-    app.server.run(host = '0.0.0.0',port = 5002,debug = True)
+    app.server.run(host = '0.0.0.0',port = int(os.getenv('port')),debug = True)
